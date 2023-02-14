@@ -95,13 +95,14 @@
                     Path=Persons, 
                     IsAsync=True,
                     Mode=TwoWay}"
-                SelectedItem="{Binding SelectedPerson}"
+                SelectedItem="{Binding SelectedPerson, Mode=TwoWay}"
                 SelectionMode="Single"
-                SelectionUnit="Cell"
+                SelectionUnit="FullRow"
                 CanUserAddRows="True"
                 EnableRowVirtualization="True"
                 EnableColumnVirtualization="True"
                 IsReadOnly="False"
+                IsManipulationEnabled="True"
                 VirtualizingPanel.IsVirtualizing="True"
                 VirtualizingPanel.VirtualizationMode="Recycling"
                 VirtualizingPanel.IsContainerVirtualizable="True"
@@ -125,9 +126,17 @@
                                         HorizontalAlignment="Stretch"
                                         Text="{Binding 
                                             Path=FirstName.Value,
-                                            Mode=TwoWay}"
-                                        Foreground="{Binding .FirstName, 
-                                            Converter={StaticResource PersonValidationColorConverter}}"/>
+                                            Mode=TwoWay,
+                                            UpdateSourceTrigger=PropertyChanged,
+                                            TargetNullValue=''}">
+                                        <TextBox.Background>
+                                            <SolidColorBrush 
+                                                Color="{Binding 
+                                                    Path=FirstName.Valid, 
+                                                    Converter={StaticResource PersonValidationColorConverter}}"
+                                                Opacity="0.3"/>
+                                        </TextBox.Background>
+                                    </TextBox>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -147,9 +156,17 @@
                                         HorizontalAlignment="Stretch"
                                         Text="{Binding 
                                             Path=LastName.Value,
-                                            Mode=TwoWay}"
-                                        Foreground="{Binding .LastName, 
-                                            Converter={StaticResource PersonValidationColorConverter}}"/>
+                                            Mode=TwoWay,
+                                            UpdateSourceTrigger=PropertyChanged,
+                                            TargetNullValue=''}">
+                                        <TextBox.Background>
+                                            <SolidColorBrush 
+                                                Color="{Binding 
+                                                    Path=LastName.Valid, 
+                                                    Converter={StaticResource PersonValidationColorConverter}}"
+                                                Opacity="0.3"/>
+                                        </TextBox.Background>
+                                    </TextBox>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -169,9 +186,17 @@
                                         HorizontalAlignment="Stretch"
                                         Text="{Binding 
                                             Path=PatronymicName.Value,
-                                            Mode=TwoWay}"
-                                        Foreground="{Binding .PatronymicName, 
-                                            Converter={StaticResource PersonValidationColorConverter}}"/>
+                                            Mode=TwoWay,
+                                            UpdateSourceTrigger=PropertyChanged,
+                                            TargetNullValue=''}">
+                                        <TextBox.Background>
+                                            <SolidColorBrush 
+                                                Color="{Binding 
+                                                    Path=PatronymicName.Valid, 
+                                                    Converter={StaticResource PersonValidationColorConverter}}"
+                                                Opacity="0.3"/>
+                                        </TextBox.Background>
+                                    </TextBox>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -191,9 +216,17 @@
                                         HorizontalAlignment="Stretch"
                                         Text="{Binding 
                                             Path=Email.Value,
-                                            Mode=TwoWay}"
-                                        Foreground="{Binding .Email, 
-                                            Converter={StaticResource PersonValidationColorConverter}}"/>
+                                            Mode=TwoWay,
+                                            UpdateSourceTrigger=PropertyChanged,
+                                            TargetNullValue=''}">
+                                        <TextBox.Background>
+                                            <SolidColorBrush 
+                                                Color="{Binding 
+                                                    Path=Email.Valid, 
+                                                    Converter={StaticResource PersonValidationColorConverter}}"
+                                                Opacity="0.3"/>
+                                        </TextBox.Background>
+                                    </TextBox>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -213,12 +246,19 @@
                                         HorizontalAlignment="Stretch"
                                         DisplayDate="{Binding 
                                             Path=Birthday.Value, 
-                                            Mode=OneWay}"
+                                            Mode=OneWay,
+                                            UpdateSourceTrigger=PropertyChanged}"
                                         SelectedDate="{Binding 
                                             Path=Birthday.Value,
-                                            Mode=TwoWay}"
-                                        Foreground="{Binding Birthday, 
-                                            Converter={StaticResource PersonValidationColorConverter}}"/>
+                                            Mode=TwoWay}">
+                                        <DatePicker.Background>
+                                            <SolidColorBrush 
+                                                Color="{Binding 
+                                                    Path = Birthday.Valid, 
+                                                    Converter={StaticResource PersonValidationColorConverter}}"
+                                                Opacity="0.3"/>
+                                        </DatePicker.Background>
+                                    </DatePicker>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

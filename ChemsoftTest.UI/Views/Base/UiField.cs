@@ -36,8 +36,16 @@ public class UiField<T> : UiField
         set
         {
             _value = value;
-            Valid = Validated(value);
-            OnPropertyChanged();
+            if (ValidateFirst)
+            {
+                Valid = Validated(value);
+                OnPropertyChanged();
+            }
+            else
+            {
+                OnPropertyChanged();
+                Valid = Validated(value);
+            }
         }
     }
 
@@ -50,6 +58,8 @@ public class UiField<T> : UiField
             OnPropertyChanged();
         }
     }
+
+    public bool ValidateFirst { get; set; } = false;
 
     public Field<T> ToField() => new()
     {

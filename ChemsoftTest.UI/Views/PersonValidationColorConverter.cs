@@ -11,16 +11,19 @@ public class PersonValidationColorConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var field = (UiField)value;
-        if (field == null)
+        if (value == null)
             return Colors.Transparent;
-        return field.Valid 
-            ? Colors.Black 
-            : Colors.Red;
+        if (value.ToString() == "{NewItemPlaceholder}")
+            return Colors.Transparent;
+        var valid = (bool)value;
+        return valid ? Colors.Transparent : Colors.Red;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return null;
+        if (value == null)
+            return false;
+        var color = (Color)value;
+        return color != Colors.Red;
     }
 }

@@ -10,8 +10,8 @@ public class MainWindowViewModel : BaseUiModel
     {
         new PersonUi()
         {
-            FirstName = { Value = "Пидр" },
-            LastName = { Value = "Жопин" }
+            FirstName = { Value = "lol" },
+            LastName = { Value = "lol" }
         }
     };
     
@@ -32,6 +32,7 @@ public class MainWindowViewModel : BaseUiModel
         get => _selectedPerson;
         set
         {
+            
             _selectedPerson = value;
             OnPropertyChanged();
         }

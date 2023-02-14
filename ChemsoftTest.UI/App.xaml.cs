@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Configuration;
 using System.Windows;
+using ChemsoftTest.Core.Database;
 using ChemsoftTest.UI.Views;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -24,6 +27,8 @@ namespace ChemsoftTest.UI
             .CreateDefaultBuilder(args)
             .ConfigureServices((_, services) =>
             {
+                // Регистрация контекста БД
+                services.AddDbContext<AppDbContext>(options => options.UseNpgsql());
                 
                 // Регистрация окон
                 services.AddSingleton<MainWindow>();
