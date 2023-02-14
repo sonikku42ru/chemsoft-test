@@ -1,4 +1,5 @@
-﻿using ChemsoftTest.UI.Utils;
+﻿using System.Windows.Input;
+using ChemsoftTest.UI.Utils;
 using ChemsoftTest.UI.Views.Base;
 using ChemsoftTest.UI.Views.Models;
 
@@ -16,6 +17,8 @@ public class MainWindowViewModel : BaseUiModel
     };
     
     private PersonUi _selectedPerson = new();
+
+    private ICommand _addPersonCommand;
 
     public ObservableRangeCollection<PersonUi> Persons
     {
@@ -35,5 +38,15 @@ public class MainWindowViewModel : BaseUiModel
             _selectedPerson = value;
             OnPropertyChanged();
         }
+    }
+
+    public ICommand AddPersonCommand =>
+        _addPersonCommand ??= new RelayCommand(_ => CreatePerson());
+    
+    private void CreatePerson()
+    {
+        var person = new PersonUi();
+        Persons.Add(person);
+        SelectedPerson = person;
     }
 }

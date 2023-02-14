@@ -9,6 +9,7 @@
     xmlns:models="clr-namespace:ChemsoftTest.UI.Views.Models"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance views:MainWindowViewModel, IsDesignTimeCreatable=True}"
+    x:Name="MainWindowRoot"
     Title="{x:Static localization:MainWindowStrings.MainWindowTitle}" 
     MinHeight="520"
     MinWidth="700"
@@ -95,10 +96,10 @@
                     Path=Persons, 
                     IsAsync=True,
                     Mode=TwoWay}"
-                SelectedItem="{Binding SelectedPerson, Mode=TwoWay}"
+                SelectedItem="{Binding SelectedPerson, Mode=OneWay}"
                 SelectionMode="Single"
                 SelectionUnit="FullRow"
-                CanUserAddRows="True"
+                CanUserAddRows="False"
                 EnableRowVirtualization="True"
                 EnableColumnVirtualization="True"
                 IsReadOnly="False"
@@ -113,10 +114,33 @@
                 <DataGrid.Columns>
                     
                     <DataGridTemplateColumn
-                        Header="First Name"
                         MinWidth="75"
                         CanUserSort="True"
-                        SortMemberPath="Id">
+                        SortMemberPath="FirstName.Value">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Button 
+                                        Grid.Column="0"
+                                        Content="+"
+                                        Width="30"
+                                        DataContext="{Binding 
+                                            Source={x:Reference MainWindowRoot},
+                                            Path=ViewModel}"
+                                        Command="{Binding Path=AddPersonCommand}"
+                                        CommandParameter="{x:Null}"/>
+                                    
+                                    <Label
+                                        Grid.Column="1"
+                                        Content="First Name"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate
                                 DataType="models:PersonUi">
@@ -124,6 +148,8 @@
                                     <TextBox 
                                         BorderThickness="0"
                                         HorizontalAlignment="Stretch"
+                                        Margin="2"
+                                        VerticalContentAlignment="Center"
                                         Text="{Binding 
                                             Path=FirstName.Value,
                                             Mode=TwoWay,
@@ -133,8 +159,7 @@
                                             <SolidColorBrush 
                                                 Color="{Binding 
                                                     Path=FirstName.Valid, 
-                                                    Converter={StaticResource PersonValidationColorConverter}}"
-                                                Opacity="0.3"/>
+                                                    Converter={StaticResource PersonValidationColorConverter}}"/>
                                         </TextBox.Background>
                                     </TextBox>
                                 </Grid>
@@ -146,7 +171,7 @@
                         Header="Last Name"
                         MinWidth="75"
                         CanUserSort="True"
-                        SortMemberPath="Id">
+                        SortMemberPath="LastName.Value">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate
                                 DataType="models:PersonUi">
@@ -154,6 +179,8 @@
                                     <TextBox 
                                         BorderThickness="0"
                                         HorizontalAlignment="Stretch"
+                                        Margin="2"
+                                        VerticalContentAlignment="Center"
                                         Text="{Binding 
                                             Path=LastName.Value,
                                             Mode=TwoWay,
@@ -163,8 +190,7 @@
                                             <SolidColorBrush 
                                                 Color="{Binding 
                                                     Path=LastName.Valid, 
-                                                    Converter={StaticResource PersonValidationColorConverter}}"
-                                                Opacity="0.3"/>
+                                                    Converter={StaticResource PersonValidationColorConverter}}"/>
                                         </TextBox.Background>
                                     </TextBox>
                                 </Grid>
@@ -184,6 +210,8 @@
                                     <TextBox 
                                         BorderThickness="0"
                                         HorizontalAlignment="Stretch"
+                                        Margin="2"
+                                        VerticalContentAlignment="Center"
                                         Text="{Binding 
                                             Path=PatronymicName.Value,
                                             Mode=TwoWay,
@@ -193,8 +221,7 @@
                                             <SolidColorBrush 
                                                 Color="{Binding 
                                                     Path=PatronymicName.Valid, 
-                                                    Converter={StaticResource PersonValidationColorConverter}}"
-                                                Opacity="0.3"/>
+                                                    Converter={StaticResource PersonValidationColorConverter}}"/>
                                         </TextBox.Background>
                                     </TextBox>
                                 </Grid>
@@ -214,6 +241,8 @@
                                     <TextBox 
                                         BorderThickness="0"
                                         HorizontalAlignment="Stretch"
+                                        Margin="2"
+                                        VerticalContentAlignment="Center"
                                         Text="{Binding 
                                             Path=Email.Value,
                                             Mode=TwoWay,
@@ -223,8 +252,7 @@
                                             <SolidColorBrush 
                                                 Color="{Binding 
                                                     Path=Email.Valid, 
-                                                    Converter={StaticResource PersonValidationColorConverter}}"
-                                                Opacity="0.3"/>
+                                                    Converter={StaticResource PersonValidationColorConverter}}"/>
                                         </TextBox.Background>
                                     </TextBox>
                                 </Grid>
@@ -244,6 +272,8 @@
                                     <DatePicker
                                         BorderThickness="0"
                                         HorizontalAlignment="Stretch"
+                                        Margin="2"
+                                        VerticalContentAlignment="Center"
                                         DisplayDate="{Binding 
                                             Path=Birthday.Value, 
                                             Mode=OneWay,
@@ -255,8 +285,7 @@
                                             <SolidColorBrush 
                                                 Color="{Binding 
                                                     Path = Birthday.Valid, 
-                                                    Converter={StaticResource PersonValidationColorConverter}}"
-                                                Opacity="0.3"/>
+                                                    Converter={StaticResource PersonValidationColorConverter}}"/>
                                         </DatePicker.Background>
                                     </DatePicker>
                                 </Grid>

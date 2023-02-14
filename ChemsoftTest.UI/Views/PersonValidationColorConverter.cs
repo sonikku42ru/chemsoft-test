@@ -12,11 +12,11 @@ public class PersonValidationColorConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value == null)
-            return Colors.Transparent;
+            return Colors.White;
         if (value.ToString() == "{NewItemPlaceholder}")
-            return Colors.Transparent;
+            return Colors.White;
         var valid = (bool)value;
-        return valid ? Colors.Transparent : Colors.Red;
+        return valid ? Colors.White : Colors.Red;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
