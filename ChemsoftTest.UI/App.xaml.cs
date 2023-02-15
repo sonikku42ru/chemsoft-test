@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Windows;
 using ChemsoftTest.Core.Database;
+using ChemsoftTest.Core.Database.Repositories;
 using ChemsoftTest.UI.Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,9 @@ namespace ChemsoftTest.UI
             {
                 // Регистрация контекста БД
                 services.AddDbContext<AppDbContext>(options => options.UseNpgsql());
+                
+                // Регистрация репозитория БД
+                services.AddScoped<PersonRepository>();
                 
                 // Регистрация окон
                 services.AddSingleton<MainWindow>();

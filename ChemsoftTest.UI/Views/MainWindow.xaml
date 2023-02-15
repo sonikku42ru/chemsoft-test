@@ -7,6 +7,8 @@
     xmlns:localization="clr-namespace:ChemsoftTest.UI.Localization"
     xmlns:views="clr-namespace:ChemsoftTest.UI.Views"
     xmlns:models="clr-namespace:ChemsoftTest.UI.Views.Models"
+    xmlns:controls="clr-namespace:ChemsoftTest.UI.Views.Controls"
+    xmlns:converters="clr-namespace:ChemsoftTest.UI.Views.Converters"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance views:MainWindowViewModel, IsDesignTimeCreatable=True}"
     x:Name="MainWindowRoot"
@@ -17,9 +19,7 @@
     Width="700">
     
     <Window.Resources>
-    
-        <views:PersonValidationColorConverter x:Key="PersonValidationColorConverter"/>
-        
+        <converters:PersonValidationColorConverter x:Key="PersonValidationColorConverter"/>
     </Window.Resources>
     
     <Grid>
@@ -144,25 +144,17 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate
                                 DataType="models:PersonUi">
-                                <Grid>
-                                    <TextBox 
-                                        BorderThickness="0"
-                                        HorizontalAlignment="Stretch"
-                                        Margin="2"
-                                        VerticalContentAlignment="Center"
-                                        Text="{Binding 
-                                            Path=FirstName.Value,
-                                            Mode=TwoWay,
-                                            UpdateSourceTrigger=PropertyChanged,
-                                            TargetNullValue=''}">
-                                        <TextBox.Background>
-                                            <SolidColorBrush 
-                                                Color="{Binding 
-                                                    Path=FirstName.Valid, 
-                                                    Converter={StaticResource PersonValidationColorConverter}}"/>
-                                        </TextBox.Background>
-                                    </TextBox>
-                                </Grid>
+                                <controls:DataGridTextBoxCell
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    Text="{Binding 
+                                        Path=FirstName.Value,
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=PropertyChanged,
+                                        TargetNullValue=''}"
+                                    CellBackground="{Binding 
+                                        Path=FirstName.Valid, 
+                                        Converter={StaticResource PersonValidationColorConverter}}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -261,7 +253,7 @@
                     </DataGridTemplateColumn>
                     
                     <DataGridTemplateColumn
-                        Header="E-Mail"
+                        Header="Birthday"
                         MinWidth="75"
                         CanUserSort="True"
                         SortMemberPath="Id">

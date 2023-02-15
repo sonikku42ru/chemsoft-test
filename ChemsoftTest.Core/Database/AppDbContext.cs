@@ -1,28 +1,36 @@
-using System.Threading.Tasks;
+using System;
+using ChemsoftTest.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChemsoftTest.Core.Database;
 
 public class AppDbContext : DbContext
 {
-    // В реальных проектах подобные вещи хранятся в конфигурации или в секретах,
-    // здесь эта строка размещена для простоты.
-    private static readonly string ConnectionTemplate = 
-        $"Host=localhost;Port=5432;Username={0};Password={1};Database={2}";
+    public AppDbContext() { }
 
-    public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options)
+    static AppDbContext()
     {
-        
-    }
-
-    public async Task ConnectAsync(string username, string password, string dbName)
-    {
-        
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
     
-    protected override void OnConfiguring(DbContextOptionsBuilder builder)
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options) { }
+
+    public virtual DbSet<PersonEntity> People { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseNpgsql(
+            "Host=localhost;Database=ChemsoftTest;Username=sonikku;Password=12345678");
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        builder.UseNpgsql();
+        modelBuilder.Entity<PersonEntity>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Person_pkey");
+
+            entity.ToTable("Person");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+        });
     }
 }

@@ -7,7 +7,7 @@ namespace ChemsoftTest.Core.Models;
 
 public class Person : IEntityConvertible<PersonEntity>
 {
-    public int Id { get; init; }
+    public long Id { get; init; }
 
     public Field<string> FirstName { get; init; } = new(string.Empty, PersonValidation.NameIsValid);
     public Field<string> LastName { get; init; } = new(string.Empty, PersonValidation.NameIsValid);

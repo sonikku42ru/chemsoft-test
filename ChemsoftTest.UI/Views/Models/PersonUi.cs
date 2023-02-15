@@ -13,7 +13,7 @@ public class PersonUi : BaseUiModel, IModelConvertible<Person>
     
     public UiField<string> PatronymicName { get; } = new(string.Empty, PersonValidation.StringIsValid);
     
-    public UiField<string> Email { get; } = new(string.Empty, PersonValidation.NameIsValid);
+    public UiField<string> Email { get; } = new(string.Empty, PersonValidation.StringIsValid);
     
     public UiField<DateTime> Birthday { get; } = new(DateTime.UtcNow, PersonValidation.DateIsValid);
 

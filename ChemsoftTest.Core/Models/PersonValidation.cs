@@ -9,8 +9,12 @@ public static class PersonValidation
     public static bool DateIsValid(DateTime date) =>
         date <= DateTime.UtcNow && date >= MinBirthday;
 
-    public static bool StringIsValid(string str) =>
-        str is { Length: < 128 };
+    public static bool StringIsValid(string str)
+    {
+        if (str == null)
+            return true;
+        return str.Length < 128;
+    }
     
     public static bool NameIsValid(string name) => 
         !string.IsNullOrEmpty(name) && 

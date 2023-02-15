@@ -39,9 +39,6 @@
       <Compile Update="Views\MainWindowViewModel.cs">
         <DependentUpon>MainWindow.xaml</DependentUpon>
       </Compile>
-      <Compile Update="Views\PersonValidationColorConverter.cs">
-        <DependentUpon>MainWindow.xaml</DependentUpon>
-      </Compile>
       <Compile Remove="obj\**" />
     </ItemGroup>
 

@@ -2,13 +2,13 @@
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
-using ChemsoftTest.UI.Views.Base;
-using ChemsoftTest.UI.Views.Models;
 
-namespace ChemsoftTest.UI.Views;
+namespace ChemsoftTest.UI.Views.Converters;
 
 public class PersonValidationColorConverter : IValueConverter
 {
+    private static readonly Color ErrorColor = Color.FromRgb(255, 51, 92);
+    
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value == null)
@@ -16,7 +16,7 @@ public class PersonValidationColorConverter : IValueConverter
         if (value.ToString() == "{NewItemPlaceholder}")
             return Colors.White;
         var valid = (bool)value;
-        return valid ? Colors.White : Colors.Red;
+        return valid ? Colors.White : ErrorColor;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -24,6 +24,6 @@ public class PersonValidationColorConverter : IValueConverter
         if (value == null)
             return false;
         var color = (Color)value;
-        return color != Colors.Red;
+        return color != ErrorColor;
     }
 }
