@@ -19,6 +19,13 @@ public class PersonUi : BaseUiModel
     public UiField<string> Email { get; init; } = new(string.Empty, PersonValidation.StringIsValid);
     
     public UiField<DateTime> Birthday { get; init; } = new(DateTime.UtcNow, PersonValidation.DateIsValid);
+
+    public bool Valid => 
+        FirstName.Valid &&
+        LastName.Valid &&
+        PatronymicName.Valid &&
+        Email.Valid &&
+        Birthday.Valid;
 }
 
 public static class PersonExtensions
@@ -45,11 +52,11 @@ public static class PersonExtensions
     public static PersonUi ToUiModel(this PersonEntity e) => new()
     {
         Id = e.Id,
-        FirstName = new UiField<string>(e.FirstName),
-        LastName = new UiField<string>(e.LastName),
-        PatronymicName = new UiField<string>(e.PatronymicName),
-        Email = new UiField<string>(e.Email),
-        Birthday = new UiField<DateTime>(e.Birthday)
+        FirstName = new UiField<string>(e.FirstName, PersonValidation.NameIsValid),
+        LastName = new UiField<string>(e.LastName, PersonValidation.NameIsValid),
+        PatronymicName = new UiField<string>(e.PatronymicName, PersonValidation.StringIsValid),
+        Email = new UiField<string>(e.Email, PersonValidation.StringIsValid),
+        Birthday = new UiField<DateTime>(e.Birthday, PersonValidation.DateIsValid)
     };
 
     public static IEnumerable<PersonUi> ToUiModels(this IEnumerable<PersonEntity> entities)

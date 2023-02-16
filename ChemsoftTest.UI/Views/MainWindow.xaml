@@ -31,34 +31,13 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition
                 MinHeight="425"
                 Height="*"/>
-            <RowDefinition
-                Height="28"/>
         </Grid.RowDefinitions>
         
-        <Menu
-            Grid.Row="0"
-            Grid.Column="0"
-            VerticalAlignment="Top"
-            VerticalContentAlignment="Stretch"
-            Height="24"
-            Panel.ZIndex="1">
-            
-            <MenuItem 
-                Height="24"
-                Header="Item 1"/>
-            
-            <MenuItem 
-                Height="24"
-                Header="Item 2"/>
-            
-        </Menu>
-        
         <Grid
-            Grid.Row="1"
+            Grid.Row="0"
             VerticalAlignment="Stretch"
             HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>

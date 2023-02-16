@@ -28,6 +28,7 @@ public class UiField<T> : UiField
         Value = def;
         if (validationFunc != default)
             _isValidated = validationFunc;
+        Valid = _isValidated(Value);
     }
 
     public T Value
@@ -55,11 +56,12 @@ public class UiField<T> : UiField
         set
         {
             _isValidated = value ?? (_ => true);
+            Valid = _isValidated(Value);
             OnPropertyChanged();
         }
     }
 
-    public bool ValidateFirst { get; set; } = false;
+    public bool ValidateFirst { get; set; } = true;
 
     public Utils.Field<T> ToField() => new()
     {

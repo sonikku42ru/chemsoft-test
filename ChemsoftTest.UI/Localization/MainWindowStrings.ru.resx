@@ -38,4 +38,10 @@
     <data name="MainWindowSave" xml:space="preserve">
         <value>Сохранить</value>
     </data>
+    <data name="AlertValidationErrorOnSave" xml:space="preserve">
+        <value>В некоторых полях есть ошибки. Требуется исправить их перед сохранением данных.</value>
+    </data>
+    <data name="AlertValidationErrorTitle" xml:space="preserve">
+        <value>Ошибка валидации</value>
+    </data>
 </root>

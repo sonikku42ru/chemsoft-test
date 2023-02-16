@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ChemsoftTest.Core.DataHandlers;
 using ChemsoftTest.Core.Models;
 using ChemsoftTest.Core.Models.Base;
 using ChemsoftTest.Core.Utils;
+using ChemsoftTest.UI.Localization;
 using ChemsoftTest.UI.Utils;
+using ChemsoftTest.UI.Views.Modals;
 
 namespace ChemsoftTest.UI.Views;
 
@@ -125,7 +128,18 @@ public class MainWindowViewModel : BaseUiModel
     private async Task SaveChangesAsync()
     {
         Loading = true;
-        await _personDataHandler.UpdateRangeAsync(_people);
+        if (_people.All(i => i.Valid))
+        {
+            await _personDataHandler.UpdateRangeAsync(_people);
+            await LoadPeopleAsync();
+        }
+        else
+        {
+            Loading = false;
+            AlertWindow.Show(
+                MainWindowStrings.AlertValidationErrorTitle,
+                MainWindowStrings.AlertValidationErrorOnSave);
+        }
         Loading = false;
     }
 }

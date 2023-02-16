@@ -60,6 +60,24 @@ namespace ChemsoftTest.UI.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Some fields contains errors. Please check and fix them before saving data..
+        /// </summary>
+        public static string AlertValidationErrorOnSave {
+            get {
+                return ResourceManager.GetString("AlertValidationErrorOnSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation error.
+        /// </summary>
+        public static string AlertValidationErrorTitle {
+            get {
+                return ResourceManager.GetString("AlertValidationErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string MainWindowDelete {

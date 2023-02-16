@@ -38,4 +38,10 @@
     <data name="MainWindowDelete" xml:space="preserve">
         <value>Delete</value>
     </data>
+    <data name="AlertValidationErrorOnSave" xml:space="preserve">
+        <value>Some fields contains errors. Please check and fix them before saving data.</value>
+    </data>
+    <data name="AlertValidationErrorTitle" xml:space="preserve">
+        <value>Validation error</value>
+    </data>
 </root>
