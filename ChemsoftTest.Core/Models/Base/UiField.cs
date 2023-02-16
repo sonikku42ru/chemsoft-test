@@ -1,7 +1,7 @@
 ﻿using System;
 using ChemsoftTest.Core.Utils;
 
-namespace ChemsoftTest.UI.Views.Base;
+namespace ChemsoftTest.Core.Models.Base;
 
 public class UiField : BaseUiModel
 {
@@ -61,7 +61,7 @@ public class UiField<T> : UiField
 
     public bool ValidateFirst { get; set; } = false;
 
-    public Field<T> ToField() => new()
+    public Utils.Field<T> ToField() => new()
     {
         Value = Value,
         Valid = Validated

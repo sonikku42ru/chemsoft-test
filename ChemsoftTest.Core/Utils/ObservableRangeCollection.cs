@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 
-namespace ChemsoftTest.UI.Utils;
+namespace ChemsoftTest.Core.Utils;
 
 public class ObservableRangeCollection<T> : ObservableCollection<T>
 {

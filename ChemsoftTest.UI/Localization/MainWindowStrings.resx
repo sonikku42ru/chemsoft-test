@@ -21,4 +21,28 @@
     <data name="MainWindowTitle" xml:space="preserve">
         <value>Chemsoft Test App</value>
     </data>
+    <data name="MainWindowSearch" xml:space="preserve">
+        <value>Search:</value>
+    </data>
+    <data name="TableFirstName" xml:space="preserve">
+        <value>First Name</value>
+    </data>
+    <data name="TableLastName" xml:space="preserve">
+        <value>Last Name</value>
+    </data>
+    <data name="TablePatronymicName" xml:space="preserve">
+        <value>Patronymic Name</value>
+    </data>
+    <data name="TableEmail" xml:space="preserve">
+        <value>E-Mail</value>
+    </data>
+    <data name="TableBirthday" xml:space="preserve">
+        <value>Birthday</value>
+    </data>
+    <data name="MainWindowDelete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="MainWindowSave" xml:space="preserve">
+        <value>Save</value>
+    </data>
 </root>

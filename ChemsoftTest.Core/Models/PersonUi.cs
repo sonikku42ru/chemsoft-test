@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using ChemsoftTest.Core.Entities;
-using ChemsoftTest.Core.Models;
-using ChemsoftTest.UI.Utils;
-using ChemsoftTest.UI.Views.Base;
+using ChemsoftTest.Core.Models.Base;
+using ChemsoftTest.Core.Utils;
 
-namespace ChemsoftTest.UI.Views.Models;
+namespace ChemsoftTest.Core.Models;
 
 public class PersonUi : BaseUiModel
 {
+    public int? Id { get; init; }
+    
     public UiField<string> FirstName { get; init; } = new(string.Empty, PersonValidation.NameIsValid);
     
     public UiField<string> LastName { get; init; } = new(string.Empty, PersonValidation.NameIsValid);
@@ -24,6 +25,7 @@ public static class PersonExtensions
 {
     public static PersonEntity ToEntity(this PersonUi p) => new()
     {
+        Id = p.Id ?? 0,
         FirstName = p.FirstName.Value,
         LastName = p.LastName.Value,
         PatronymicName = p.PatronymicName.Value,
@@ -31,7 +33,8 @@ public static class PersonExtensions
         Birthday = p.Birthday.Value
     };
 
-    public static IEnumerable<PersonEntity> ToEntities(this IEnumerable<PersonUi> models)
+    public static IEnumerable<PersonEntity> ToEntities(
+        this IEnumerable<PersonUi> models)
     {
         var list = new List<PersonEntity>();
         foreach (var model in models)
@@ -41,6 +44,7 @@ public static class PersonExtensions
 
     public static PersonUi ToUiModel(this PersonEntity e) => new()
     {
+        Id = e.Id,
         FirstName = new UiField<string>(e.FirstName),
         LastName = new UiField<string>(e.LastName),
         PatronymicName = new UiField<string>(e.PatronymicName),

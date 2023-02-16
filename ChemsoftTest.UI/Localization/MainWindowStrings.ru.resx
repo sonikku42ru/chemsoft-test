@@ -14,4 +14,28 @@
     <data name="MainWindowTitle" xml:space="preserve">
         <value>Тестовое приложение для "Химсофт"</value>
     </data>
+    <data name="MainWindowSearch" xml:space="preserve">
+        <value>Поиск:</value>
+    </data>
+    <data name="TableFirstName" xml:space="preserve">
+        <value>Имя</value>
+    </data>
+    <data name="TableBirthday" xml:space="preserve">
+        <value>Дата рождения</value>
+    </data>
+    <data name="TableEmail" xml:space="preserve">
+        <value>E-Mail</value>
+    </data>
+    <data name="TableLastName" xml:space="preserve">
+        <value>Фамилия</value>
+    </data>
+    <data name="TablePatronymicName" xml:space="preserve">
+        <value>Отчество</value>
+    </data>
+    <data name="MainWindowDelete" xml:space="preserve">
+        <value>Удалить</value>
+    </data>
+    <data name="MainWindowSave" xml:space="preserve">
+        <value>Сохранить</value>
+    </data>
 </root>

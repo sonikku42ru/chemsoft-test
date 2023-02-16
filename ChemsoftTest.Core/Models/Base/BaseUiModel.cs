@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ChemsoftTest.UI.Views.Base;
+namespace ChemsoftTest.Core.Models.Base;
 
 public class BaseUiModel : INotifyPropertyChanged
 {

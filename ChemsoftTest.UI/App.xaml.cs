@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Windows;
 using ChemsoftTest.Core.Database;
 using ChemsoftTest.Core.Database.Repositories;
+using ChemsoftTest.Core.DataHandlers;
 using ChemsoftTest.UI.Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +34,8 @@ namespace ChemsoftTest.UI
                 
                 // Регистрация репозитория БД
                 services.AddScoped<PersonRepository>();
+
+                services.AddScoped<PersonDataHandler>();
                 
                 // Регистрация окон
                 services.AddSingleton<MainWindow>();

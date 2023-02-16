@@ -6,9 +6,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:localization="clr-namespace:ChemsoftTest.UI.Localization"
     xmlns:views="clr-namespace:ChemsoftTest.UI.Views"
-    xmlns:models="clr-namespace:ChemsoftTest.UI.Views.Models"
     xmlns:controls="clr-namespace:ChemsoftTest.UI.Views.Controls"
     xmlns:converters="clr-namespace:ChemsoftTest.UI.Views.Converters"
+    xmlns:models="clr-namespace:ChemsoftTest.Core.Models;assembly=ChemsoftTest.Core"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance views:MainWindowViewModel, IsDesignTimeCreatable=True}"
     x:Name="MainWindowRoot"
@@ -21,6 +22,11 @@
     
     <Window.Resources>
         <converters:PersonValidationColorConverter x:Key="PersonValidationColorConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:NullToBoolConverter x:Key="NullToBoolConverter"/>
+        
+        <system:Boolean x:Key="True">True</system:Boolean>
+        <system:Boolean x:Key="False">False</system:Boolean>
     </Window.Resources>
     
     <Grid>
@@ -67,23 +73,71 @@
             <StackPanel
                 Grid.Row="0"
                 Grid.Column="0"
-                Orientation="Horizontal">
+                Orientation="Horizontal"
+                VerticalAlignment="Stretch">
                 
                 <Label
                     VerticalAlignment="Center"
-                    HorizontalAlignment="Left"
                     VerticalContentAlignment="Center"
                     Margin="2"
-                    Content="Search:"/>
+                    Content="{x:Static localization:MainWindowStrings.MainWindowSearch}"/>
                 
                 <TextBox
                     Margin="2"
                     Width="150"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Left"
-                    TextWrapping="NoWrap"/>
+                    VerticalAlignment="Stretch"
+                    VerticalContentAlignment="Center"
+                    TextWrapping="NoWrap"
+                    Text="{Binding 
+                        Path=Filter,
+                        UpdateSourceTrigger=PropertyChanged}"/>
                 
+                <Button
+                    Margin="2"
+                    Width="60"
+                    VerticalAlignment="Stretch"
+                    VerticalContentAlignment="Center"
+                    Content="{x:Static localization:MainWindowStrings.MainWindowDelete}"
+                    IsEnabled="{Binding 
+                        Path=SelectedPerson,
+                        Converter={StaticResource NullToBoolConverter}}"
+                    Command="{Binding DeletePersonCommand}"/>
+                
+                <Button
+                    Margin="2"
+                    Width="60"
+                    VerticalAlignment="Stretch"
+                    VerticalContentAlignment="Center"
+                    Content="{x:Static localization:MainWindowStrings.MainWindowSave}"
+                    Command="{Binding SaveChangesCommand}"/>
+                
+            </StackPanel>
+            
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0"
+                Orientation="Vertical"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Stretch"
+                Visibility="{Binding
+                    Path=Loading,
+                    Converter={StaticResource BoolToVisibilityConverter},
+                    ConverterParameter={StaticResource True}}">
+                
+                <Label
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Content="Loading..."/>
+                
+                <ProgressBar
+                    x:Name="LoadingProgressBar"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Width="60"
+                    Height="20"
+                    IsIndeterminate="True"/>
             </StackPanel>
             
             <DataGrid
@@ -94,7 +148,7 @@
                 AutoGenerateColumns="False"
                 VerticalAlignment="Stretch"
                 ItemsSource="{Binding 
-                    Path=People, 
+                    Path=FilteredPeople, 
                     IsAsync=True,
                     Mode=OneWay}"
                 SelectedItem="{Binding SelectedPerson, Mode=OneWay}"
@@ -105,6 +159,10 @@
                 EnableColumnVirtualization="True"
                 IsReadOnly="False"
                 IsManipulationEnabled="True"
+                Visibility="{Binding
+                    Path=Loading,
+                    Converter={StaticResource BoolToVisibilityConverter},
+                    ConverterParameter={StaticResource False}}"
                 VirtualizingPanel.IsVirtualizing="True"
                 VirtualizingPanel.VirtualizationMode="Recycling"
                 VirtualizingPanel.IsContainerVirtualizable="True"
@@ -138,7 +196,7 @@
                                     
                                     <Label
                                         Grid.Column="1"
-                                        Content="First Name"/>
+                                        Content="{x:Static localization:MainWindowStrings.TableFirstName}"/>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.HeaderTemplate>
@@ -161,100 +219,76 @@
                     </DataGridTemplateColumn>
                     
                     <DataGridTemplateColumn
-                        Header="Last Name"
+                        Header="{x:Static localization:MainWindowStrings.TableLastName}"
                         MinWidth="75"
                         CanUserSort="True"
                         SortMemberPath="LastName.Value">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate
                                 DataType="models:PersonUi">
-                                <Grid>
-                                    <TextBox 
-                                        BorderThickness="0"
-                                        HorizontalAlignment="Stretch"
-                                        Margin="2"
-                                        VerticalContentAlignment="Center"
-                                        Text="{Binding 
-                                            Path=LastName.Value,
-                                            Mode=TwoWay,
-                                            UpdateSourceTrigger=PropertyChanged,
-                                            TargetNullValue=''}">
-                                        <TextBox.Background>
-                                            <SolidColorBrush 
-                                                Color="{Binding 
-                                                    Path=LastName.Valid, 
-                                                    Converter={StaticResource PersonValidationColorConverter}}"/>
-                                        </TextBox.Background>
-                                    </TextBox>
-                                </Grid>
+                                <controls:DataGridTextBoxCell
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    Text="{Binding 
+                                        Path=LastName.Value,
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=PropertyChanged,
+                                        TargetNullValue=''}"
+                                    CellBackground="{Binding 
+                                        Path=LastName.Valid, 
+                                        Converter={StaticResource PersonValidationColorConverter}}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     
                     <DataGridTemplateColumn
-                        Header="Patronymic Name"
+                        Header="{x:Static localization:MainWindowStrings.TablePatronymicName}"
                         MinWidth="75"
                         CanUserSort="True"
                         SortMemberPath="Id">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate
                                 DataType="models:PersonUi">
-                                <Grid>
-                                    <TextBox 
-                                        BorderThickness="0"
-                                        HorizontalAlignment="Stretch"
-                                        Margin="2"
-                                        VerticalContentAlignment="Center"
-                                        Text="{Binding 
-                                            Path=PatronymicName.Value,
-                                            Mode=TwoWay,
-                                            UpdateSourceTrigger=PropertyChanged,
-                                            TargetNullValue=''}">
-                                        <TextBox.Background>
-                                            <SolidColorBrush 
-                                                Color="{Binding 
-                                                    Path=PatronymicName.Valid, 
-                                                    Converter={StaticResource PersonValidationColorConverter}}"/>
-                                        </TextBox.Background>
-                                    </TextBox>
-                                </Grid>
+                                <controls:DataGridTextBoxCell
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    Text="{Binding 
+                                        Path=PatronymicName.Value,
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=PropertyChanged,
+                                        TargetNullValue=''}"
+                                    CellBackground="{Binding 
+                                        Path=PatronymicName.Valid, 
+                                        Converter={StaticResource PersonValidationColorConverter}}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     
                     <DataGridTemplateColumn
-                        Header="E-Mail"
+                        Header="{x:Static localization:MainWindowStrings.TableEmail}"
                         MinWidth="75"
                         CanUserSort="True"
                         SortMemberPath="Id">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate
                                 DataType="models:PersonUi">
-                                <Grid>
-                                    <TextBox 
-                                        BorderThickness="0"
-                                        HorizontalAlignment="Stretch"
-                                        Margin="2"
-                                        VerticalContentAlignment="Center"
-                                        Text="{Binding 
-                                            Path=Email.Value,
-                                            Mode=TwoWay,
-                                            UpdateSourceTrigger=PropertyChanged,
-                                            TargetNullValue=''}">
-                                        <TextBox.Background>
-                                            <SolidColorBrush 
-                                                Color="{Binding 
-                                                    Path=Email.Valid, 
-                                                    Converter={StaticResource PersonValidationColorConverter}}"/>
-                                        </TextBox.Background>
-                                    </TextBox>
-                                </Grid>
+                                <controls:DataGridTextBoxCell
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    Text="{Binding 
+                                        Path=Email.Value,
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=PropertyChanged,
+                                        TargetNullValue=''}"
+                                    CellBackground="{Binding 
+                                        Path=Email.Valid, 
+                                        Converter={StaticResource PersonValidationColorConverter}}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     
                     <DataGridTemplateColumn
-                        Header="Birthday"
+                        Header="{x:Static localization:MainWindowStrings.TableBirthday}"
                         MinWidth="75"
                         CanUserSort="True"
                         SortMemberPath="Id">
@@ -267,6 +301,7 @@
                                         HorizontalAlignment="Stretch"
                                         Margin="2"
                                         VerticalContentAlignment="Center"
+                                        VerticalAlignment="Center"
                                         DisplayDate="{Binding 
                                             Path=Birthday.Value, 
                                             Mode=OneWay,

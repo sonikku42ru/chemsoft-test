@@ -39,7 +39,19 @@ public abstract class BaseRepository<TEntity> where TEntity : BaseEntity, new()
         await Context.SaveChangesAsync();
         return entity;
     }
-    
+
+    public async Task AddOrUpdateRangeAsync(IEnumerable<TEntity> entities)
+    {
+        var list = entities.ToList();
+        await Task.Run(() => Context
+            .UpdateRange(list
+                .Where(i => !i.IsNew)));
+        await Context.SaveChangesAsync();
+        await AddRangeAsync(list
+            .Where(i => i.IsNew));
+        await Context.SaveChangesAsync();
+    }
+
     public async Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities)
     {
         var list = entities.ToList();

@@ -60,11 +60,83 @@ namespace ChemsoftTest.UI.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string MainWindowDelete {
+            get {
+                return ResourceManager.GetString("MainWindowDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string MainWindowSave {
+            get {
+                return ResourceManager.GetString("MainWindowSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search:.
+        /// </summary>
+        public static string MainWindowSearch {
+            get {
+                return ResourceManager.GetString("MainWindowSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chemsoft Test App.
         /// </summary>
         public static string MainWindowTitle {
             get {
                 return ResourceManager.GetString("MainWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Birthday.
+        /// </summary>
+        public static string TableBirthday {
+            get {
+                return ResourceManager.GetString("TableBirthday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-Mail.
+        /// </summary>
+        public static string TableEmail {
+            get {
+                return ResourceManager.GetString("TableEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        public static string TableFirstName {
+            get {
+                return ResourceManager.GetString("TableFirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        public static string TableLastName {
+            get {
+                return ResourceManager.GetString("TableLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Patronymic Name.
+        /// </summary>
+        public static string TablePatronymicName {
+            get {
+                return ResourceManager.GetString("TablePatronymicName", resourceCulture);
             }
         }
     }

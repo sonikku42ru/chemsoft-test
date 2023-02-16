@@ -25,7 +25,10 @@ namespace ChemsoftTest.Core.Migrations
             modelBuilder.Entity("ChemsoftTest.Core.Entities.PersonEntity", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("timestamp without time zone");

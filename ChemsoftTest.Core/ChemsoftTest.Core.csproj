@@ -18,6 +18,9 @@
 
     <ItemGroup>
       <Compile Remove="obj\**" />
+      <Compile Update="Models\PersonValidation.cs">
+        <DependentUpon>PersonUi.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>

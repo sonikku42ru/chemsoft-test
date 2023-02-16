@@ -26,11 +26,15 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<PersonEntity>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("Person_pkey");
+            entity
+                .HasKey(e => e.Id)
+                .HasName("Person_pkey");
 
             entity.ToTable("Person");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity
+                .Property(e => e.Id)
+                .ValueGeneratedOnAdd();
         });
     }
 }
