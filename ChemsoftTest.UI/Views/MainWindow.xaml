@@ -16,7 +16,8 @@
     MinHeight="520"
     MinWidth="700"
     Height="520" 
-    Width="700">
+    Width="700"
+    Loaded="OnLoaded">
     
     <Window.Resources>
         <converters:PersonValidationColorConverter x:Key="PersonValidationColorConverter"/>
@@ -93,9 +94,9 @@
                 AutoGenerateColumns="False"
                 VerticalAlignment="Stretch"
                 ItemsSource="{Binding 
-                    Path=Persons, 
+                    Path=People, 
                     IsAsync=True,
-                    Mode=TwoWay}"
+                    Mode=OneWay}"
                 SelectedItem="{Binding SelectedPerson, Mode=OneWay}"
                 SelectionMode="Single"
                 SelectionUnit="FullRow"

@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using ChemsoftTest.UI.Views.Models;
+﻿using System.Windows;
 
 namespace ChemsoftTest.UI.Views
 {
@@ -14,6 +13,11 @@ namespace ChemsoftTest.UI.Views
         {
             InitializeComponent();
             DataContext = viewModel;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.LoadPeopleCommand?.Execute(null);
         }
     }
 }

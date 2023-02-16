@@ -61,3 +61,9 @@ public class ObservableRangeCollection<T> : ObservableCollection<T>
         ProcessRange(collection, ProcessRangeAction.Remove);
     }
 }
+
+public static class ObservableRangeCollectionExtensions
+{
+    public static ObservableRangeCollection<T> ToObservableRangeCollection<T>(this IEnumerable<T> enumerable) =>
+        new(enumerable);
+}

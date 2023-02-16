@@ -16,7 +16,7 @@ public abstract class BaseRepository<TEntity> where TEntity : BaseEntity, new()
         Context = context;
     }
 
-    protected IQueryable<TEntity> GetAll() => 
+    public IQueryable<TEntity> GetAll() => 
         Context.Set<TEntity>().AsNoTracking();
 
     public async Task<TEntity> GetByIdAsync(int id) => 

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ChemsoftTest.Core.Database.Repositories;
-using ChemsoftTest.Core.Entities;
-using ChemsoftTest.Core.Models;
 using ChemsoftTest.UI.Utils;
 using ChemsoftTest.UI.Views.Base;
 using ChemsoftTest.UI.Views.Models;
@@ -15,28 +12,22 @@ public class MainWindowViewModel : BaseUiModel
 {
     private readonly PersonRepository _personRepository;
     
-    private ObservableRangeCollection<PersonUi> _persons = new()
-    {
-        new PersonUi()
-        {
-            FirstName = { Value = "lol2" },
-            LastName = { Value = "lol" }
-        }
-    };
+    private ObservableRangeCollection<PersonUi> _people = new();
+
+    private string _filter = "";
     
     private PersonUi _selectedPerson = new();
 
     private ICommand _addPersonCommand;
+    private ICommand _loadPeopleCommand;
 
-    public ObservableRangeCollection<PersonUi> Persons
-    {
-        get => _persons;
-        set
-        {
-            _persons = value;
-            OnPropertyChanged();
-        }
-    }
+    public ObservableRangeCollection<PersonUi> People => _people
+        .Where(i => 
+            i.Email.Value.Contains(_filter) ||
+            i.FirstName.Value.Contains(_filter) ||
+            i.PatronymicName.Value.Contains(_filter) ||
+            i.LastName.Value.Contains(_filter))
+        .ToObservableRangeCollection();
 
     public PersonUi SelectedPerson
     {
@@ -48,33 +39,45 @@ public class MainWindowViewModel : BaseUiModel
         }
     }
 
+    public string Filter
+    {
+        get => _filter;
+        set
+        {
+            _filter = value;
+            OnPropertyChanged(nameof(People));
+        }
+    }
+
     public ICommand AddPersonCommand =>
         _addPersonCommand ??= new RelayCommand(_ => CreatePerson());
+
+    public ICommand LoadPeopleCommand =>
+        _loadPeopleCommand ??= new RelayCommand(_ => Task.Run(LoadPeopleAsync));
 
     public MainWindowViewModel(PersonRepository personRepository)
     {
         _personRepository = personRepository;
-        Task.Run(async () =>
-        {
-            var added = await personRepository.AddRangeAsync(new PersonEntity[]
-            {
-                new()
-                {
-                    FirstName = "kek",
-                    LastName = "kek",
-                    Birthday = DateTime.Today,
-                    Email = "kek@kek.kek",
-                    PatronymicName = "keks"
-                }
-            });
-            var found = personRepository.GetByIdAsync(added.ElementAt(0).Id);
-        });
     }
     
     private void CreatePerson()
     {
         var person = new PersonUi();
-        Persons.Add(person);
+        _people.Add(person);
+        OnPropertyChanged(nameof(People));
         SelectedPerson = person;
+    }
+
+    private async Task LoadPeopleAsync()
+    {
+        ObservableRangeCollection<PersonUi> people = new();
+        await Task.Run(() =>
+        {
+            people = _personRepository
+                .GetAll()
+                .ToCollection();
+        });
+        _people = people;
+        OnPropertyChanged(nameof(People));
     }
 }
