@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System.Threading;
+using System.Windows;
+using System.Windows.Threading;
+using ChemsoftTest.UI.Views.Modals;
 
 namespace ChemsoftTest.UI.Views
 {
@@ -13,6 +16,9 @@ namespace ChemsoftTest.UI.Views
         {
             InitializeComponent();
             DataContext = viewModel;
+            viewModel.CloseRequested += (_, _) => Application.Current.Dispatcher.Invoke(
+                DispatcherPriority.Background,
+                new ThreadStart(Close));
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

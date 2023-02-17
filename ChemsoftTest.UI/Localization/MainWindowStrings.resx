@@ -51,4 +51,10 @@
     <data name="AlertValidationErrorTitle" xml:space="preserve">
         <value>Validation error</value>
     </data>
+    <data name="AlertNoDatabase" xml:space="preserve">
+        <value>Database does not exist!</value>
+    </data>
+    <data name="AlertErrorTitle" xml:space="preserve">
+        <value>Error</value>
+    </data>
 </root>

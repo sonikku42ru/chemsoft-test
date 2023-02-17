@@ -12,15 +12,15 @@ public class AppDbContext : DbContext
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
-    
+
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) { }
 
     public virtual DbSet<PersonEntity> People { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(
-            "Host=localhost;Database=ChemsoftTest;Username=sonikku;Password=12345678");
+    
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //     => optionsBuilder.UseNpgsql(
+    //         "Host=localhost;Database=ChemsoftTest;Username=postgres;Password=postgres");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

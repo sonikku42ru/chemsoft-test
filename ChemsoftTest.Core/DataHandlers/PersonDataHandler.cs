@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,16 +19,28 @@ public class PersonDataHandler : BaseUiModel
         _personRepository = repository;
     }
 
-    public async Task<ObservableRangeCollection<PersonUi>> GetAllPeople()
+    public bool Connected => _personRepository.Connected;
+    
+    public async Task<Result<ObservableRangeCollection<PersonUi>, bool>> GetAllPeople()
     {
         IQueryable<PersonEntity> entities = null;
-        await Task.Run(() =>
+        return await Task.Run(() =>
         {
-            entities = _personRepository.GetAll();
+            try
+            {
+                entities = _personRepository.GetAll();
+            }
+            catch (Exception)
+            {
+                return new Result<ObservableRangeCollection<PersonUi>, bool>(
+                    new ObservableRangeCollection<PersonUi>(), 
+                    false);
+            }
+
+            return new Result<ObservableRangeCollection<PersonUi>, bool>(
+                entities.ToCollection(), 
+                true);
         });
-        return entities != null 
-            ? entities.ToCollection() 
-            : new ObservableRangeCollection<PersonUi>();
     }
 
     public async Task<Result<PersonUi, bool>> AddAsync(PersonUi person)

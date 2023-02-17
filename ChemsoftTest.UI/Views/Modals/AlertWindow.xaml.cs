@@ -4,7 +4,7 @@ using System.Windows.Threading;
 
 namespace ChemsoftTest.UI.Views.Modals;
 
-public partial class AlertWindow : Window
+public partial class AlertWindow
 {
     private AlertWindow()
     {

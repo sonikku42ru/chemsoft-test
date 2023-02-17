@@ -60,6 +60,24 @@ namespace ChemsoftTest.UI.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string AlertErrorTitle {
+            get {
+                return ResourceManager.GetString("AlertErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database does not exist!.
+        /// </summary>
+        public static string AlertNoDatabase {
+            get {
+                return ResourceManager.GetString("AlertNoDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Some fields contains errors. Please check and fix them before saving data..
         /// </summary>
         public static string AlertValidationErrorOnSave {

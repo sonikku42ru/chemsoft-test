@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,7 +22,7 @@ public class MainWindowViewModel : BaseUiModel
     
     private ObservableRangeCollection<PersonUi> _people = new();
     private ObservableRangeCollection<PersonUi> _filteredPeople = new();
-    private string _filter = "";
+    private string _filter = string.Empty;
     private bool _loading = true;
     private PersonUi _selectedPerson = new();
     
@@ -83,6 +84,8 @@ public class MainWindowViewModel : BaseUiModel
     public ICommand SaveChangesCommand =>
         _saveChangesCommand ??= new RelayCommand(_ => Task.Run(SaveChangesAsync));
 
+    public event EventHandler CloseRequested;
+
     public MainWindowViewModel(PersonDataHandler personDataHandler)
     {
         _personDataHandler = personDataHandler;
@@ -111,9 +114,18 @@ public class MainWindowViewModel : BaseUiModel
     private async Task LoadPeopleAsync()
     {
         Loading = true;
-        _people = await _personDataHandler.GetAllPeople();
-        ApplyFilter();
-        Loading = false;
+        if (_personDataHandler.Connected)
+        {
+            var result = await _personDataHandler.GetAllPeople();
+            _people = result.Value;
+            ApplyFilter();
+            Loading = false;
+        }
+        else
+        {
+            AlertWindow.Show(MainWindowStrings.AlertErrorTitle, MainWindowStrings.AlertNoDatabase);
+            CloseRequested?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     private void DeletePerson()

@@ -44,4 +44,10 @@
     <data name="AlertValidationErrorTitle" xml:space="preserve">
         <value>Ошибка валидации</value>
     </data>
+    <data name="AlertNoDatabase" xml:space="preserve">
+        <value>БД не существует.</value>
+    </data>
+    <data name="AlertErrorTitle" xml:space="preserve">
+        <value>Ошибка</value>
+    </data>
 </root>

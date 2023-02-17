@@ -3,13 +3,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChemsoftTest.Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace ChemsoftTest.Core.Database.Repositories;
 
 public abstract class BaseRepository<TEntity> where TEntity : BaseEntity, new()
 {
     protected DbContext Context { get; }
+
+    public bool Connected => Context.Database.CanConnect();
 
     public BaseRepository(DbContext context)
     {
